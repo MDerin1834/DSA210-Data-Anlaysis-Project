@@ -20,7 +20,7 @@
    
    Further analysis will explore the leading causes of death from colorectal cancer and identify crucial factors that contribute to its development.
 
-### 4. Data Description & Collection
+### 4. Data Collection & Enrichment
    
 The project will use the following datasets:
 
