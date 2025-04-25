@@ -46,7 +46,7 @@ Sources:
 4- https://www.wcrf.org/preventing-cancer/cancer-statistics/colorectal-cancer-statistics/ [WCRF] 
 
 
-## STAGE II - Exploratory Data Analysis (EDA) & Hypothesis Testing
+## Stage II - Exploratory Data Analysis (EDA) & Hypothesis Testing
 
 ### Data Enrichment & Preprocessing
 
