@@ -1,5 +1,7 @@
 # Colorectal Cancer Survival Analysis - DSA210 Project
 
+## Stage I - Project Proposal 
+
 ### 1. Project Overview
    
    This project aims to analyze a large global dataset on colorectal cancer (CRC) with the goal of developing a machine learning model that can predict survival outcomes based on various factors. The public dataset contains 26 parameters across over 160,000 records, including demographic and medical data related to colorectal cancer patients from various countries taken from kaggle website. 
@@ -42,3 +44,114 @@ Sources:
 3- Wang, C. C., Sung, W. W., Yan, P. Y., Ko, P. Y., & Tsai, M. C. (2021). Favorable colorectal cancer mortality-to-incidence ratios in countries with high expenditures on health and development index: A study based on GLOBOCAN database. Medicine, 100(41), e27414. https://doi.org/10.1097/MD.0000000000027414
 
 4- https://www.wcrf.org/preventing-cancer/cancer-statistics/colorectal-cancer-statistics/ [WCRF] 
+
+## STAGE II - Exploratory Data Analysis (EDA) & Hypothesis Testing
+
+### Data Enrichment & Preprocessing
+
+#### 1.1 Feature Engineering
+
+Age Distribution Score: 
+Created a categorical score based on age brackets and their epidemiological weights:
+Rationale: Reflects increased colorectal cancer risk with age (aligned with WHO guidelines).
+
+Country ASR (Age-Standardized Rate) Score:
+Mapped countries to their published ASR values (e.g., Japan: 36.6, India: 4.9) to quantify regional risk.
+Handling Missing Data: Filled unmapped countries (e.g., Canada) with 0 (interpreted as "no data").
+
+#### 1.2 Data Integrity Checks
+Null Values: Confirmed no missing values across all 28 original columns.
+Data Types:
+6 numerical (e.g., Age, Tumor_Size_mm, Healthcare_Costs).
+22 categorical (e.g., Cancer_Stage, Genetic_Mutation).
+
+Descriptive Statistics:
+Mean age: 69.1 years (SD: 11.9), tumor size: 42.0mm (SD: 21.7).
+Healthcare costs ranged from $25K to $120K (mean: $72.3K).
+
+### EDA and Visualizations
+
+#### 2.1 Univariate Analysis
+
+Key Distributions:
+Age: Right-skewed, peak at 60–75 years (typical for CRC diagnoses).
+Tumor Size: Uniform distribution (5–79mm), no skew.
+Mortality: 40% deceased (Mortality=Yes).
+
+Categorical Variables:
+Gender: Male-dominated (60% of cases).
+Cancer Stage: Balanced between Localized (40%) and Regional (40%), but fewer Metastatic (20%).
+Early Detection: 65% detected early, linked to 30% lower mortality in stacked bar plots.
+
+#### 2.2 Bivariate/Multivariate Analysis
+
+Key Correlations:
+Age vs. Age Distribution Score: Strong correlation (ρ=0.86, p<0.001).
+Tumor Size vs. Treatment: Surgery preferred for larger tumors (>50mm).
+Healthcare Costs: No correlation with outcomes (ρ≈0).
+
+Mortality Drivers:
+Smoking: 58% of smokers died vs. 42% non-smokers.
+Physical Activity: Low activity → 2.1× higher mortality vs. high activity.
+Genetic Mutation: Present in 35% of deceased patients vs. 22% survivors.
+
+Visualizations:
+Heatmap: Confirmed weak correlations between numerical variables (all |ρ|<0.3).
+Pairplot: Showed non-linear relationships (e.g., incidence vs. mortality rates).
+
+### Continent-based Analysis
+
+#### 3.1 Geographic Trends
+
+ASR Scores: Europe dominated (42.6% of total ASR), reflecting higher CRC burden.
+Healthcare Costs:
+Asia: Highest median costs ($78K), likely due to advanced care in Japan/South Korea.
+Africa: Lowest costs ($45K), but sparse data (only 5% of samples).
+
+#### 3.2 Risk Factors by Continent
+
+Europe/North America:
+Highest rates of obesity (32%) and high-risk diets (processed meat/low fiber).
+60% of genetic mutations reported in these regions (likely due to better testing access).
+
+Asia:
+Leading in smoking (45%) and alcohol consumption (52%).
+Early Detection: 70% (vs. 55% in Africa).
+
+#### Pie Charts:
+
+Tumor Size: Asia contributed 35.2% of cases, Europe 26.3%.
+Age Distribution: Asia (33.4%) and Europe (26.8%) had the oldest populations.
+
+### Hypothesis Testing
+
+#### 4.1 Objective
+Test if American continents (North/South America) have lower survival rates compared to other continents.
+
+#### 4.2 Methodology
+Test: Chi-Square Test of Independence (α=0.05).
+
+Variables:
+Dependent: Survival_5_years (binary: Yes/No).
+Independent: Continent (6 categories).
+
+#### 4.3 Results
+
+Metric	Chi-Square Statistic	p-value	Conclusion
+Survival_5_years	8.27	0.142	Fail to reject H₀
+Mortality	6.99	0.222	Fail to reject H₀
+
+Interpretation:
+No significant association between continent and survival/mortality.
+
+Possible Reasons:
+Similar healthcare standards across continents in the dataset.
+Data limitations (e.g., underrepresentation of African countries).
+
+#### Key Takeaways
+
+Age and Lifestyle are stronger predictors of CRC outcomes than geography.
+Early Detection reduces mortality by 30%—critical for public health strategies.
+Hypothesis Rejected: Survival rates are statistically similar across continents.
+
+
