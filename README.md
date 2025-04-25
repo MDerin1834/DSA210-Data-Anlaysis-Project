@@ -142,8 +142,11 @@ Survival_5_years	8.27	0.142	Fail to reject H₀
 Mortality	6.99	0.222	Fail to reject H₀
 
 Interpretation:
+
 Fail to Reject the Null Hypothesis for Survival_5_years_numerical: No significant relationship between continent and survival_5_years_numerical.
+
 Fail to Reject the Null Hypothesis for Mortality: No significant relationship between continent and mortality.
+
 These results show that the data does not provide enough information to prove our hypothesis (alternative hypothesis), so we stick with null hypothesis.
 
 Possible Reasons:
