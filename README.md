@@ -45,27 +45,29 @@ Sources:
 
 4- https://www.wcrf.org/preventing-cancer/cancer-statistics/colorectal-cancer-statistics/ [WCRF] 
 
+
 ## STAGE II - Exploratory Data Analysis (EDA) & Hypothesis Testing
 
 ### Data Enrichment & Preprocessing
 
 #### 1.1 Feature Engineering
 
-Age Distribution Score: 
+* Age Distribution Score: 
 Created a categorical score based on age brackets and their epidemiological weights:
 Rationale: Reflects increased colorectal cancer risk with age (aligned with WHO guidelines).
 
-Country ASR (Age-Standardized Rate) Score:
+* Country ASR (Age-Standardized Rate) Score:
 Mapped countries to their published ASR values (e.g., Japan: 36.6, India: 4.9) to quantify regional risk.
 Handling Missing Data: Filled unmapped countries (e.g., Canada) with 0 (interpreted as "no data").
 
 #### 1.2 Data Integrity Checks
-Null Values: Confirmed no missing values across all 28 original columns.
+
+* Null Values: Confirmed no missing values across all 28 original columns.
 Data Types:
 6 numerical (e.g., Age, Tumor_Size_mm, Healthcare_Costs).
 22 categorical (e.g., Cancer_Stage, Genetic_Mutation).
 
-Descriptive Statistics:
+* Descriptive Statistics:
 Mean age: 69.1 years (SD: 11.9), tumor size: 42.0mm (SD: 21.7).
 Healthcare costs ranged from $25K to $120K (mean: $72.3K).
 
@@ -73,29 +75,29 @@ Healthcare costs ranged from $25K to $120K (mean: $72.3K).
 
 #### 2.1 Univariate Analysis
 
-Key Distributions:
+* Key Distributions:
 Age: Right-skewed, peak at 60–75 years (typical for CRC diagnoses).
 Tumor Size: Uniform distribution (5–79mm), no skew.
 Mortality: 40% deceased (Mortality=Yes).
 
-Categorical Variables:
+* Categorical Variables:
 Gender: Male-dominated (60% of cases).
 Cancer Stage: Balanced between Localized (40%) and Regional (40%), but fewer Metastatic (20%).
 Early Detection: 65% detected early, linked to 30% lower mortality in stacked bar plots.
 
 #### 2.2 Bivariate/Multivariate Analysis
 
-Key Correlations:
+* Key Correlations:
 Age vs. Age Distribution Score: Strong correlation (ρ=0.86, p<0.001).
 Tumor Size vs. Treatment: Surgery preferred for larger tumors (>50mm).
 Healthcare Costs: No correlation with outcomes (ρ≈0).
 
-Mortality Drivers:
+* Mortality Drivers:
 Smoking: 58% of smokers died vs. 42% non-smokers.
 Physical Activity: Low activity → 2.1× higher mortality vs. high activity.
 Genetic Mutation: Present in 35% of deceased patients vs. 22% survivors.
 
-Visualizations:
+* Visualizations:
 Heatmap: Confirmed weak correlations between numerical variables (all |ρ|<0.3).
 Pairplot: Showed non-linear relationships (e.g., incidence vs. mortality rates).
 
@@ -103,24 +105,24 @@ Pairplot: Showed non-linear relationships (e.g., incidence vs. mortality rates).
 
 #### 3.1 Geographic Trends
 
-ASR Scores: Europe dominated (42.6% of total ASR), reflecting higher CRC burden.
+* ASR Scores: Europe dominated (42.6% of total ASR), reflecting higher CRC burden.
 Healthcare Costs:
 Asia: Highest median costs ($78K), likely due to advanced care in Japan/South Korea.
 Africa: Lowest costs ($45K), but sparse data (only 5% of samples).
 
 #### 3.2 Risk Factors by Continent
 
-Europe/North America:
+* Europe/North America:
 Highest rates of obesity (32%) and high-risk diets (processed meat/low fiber).
 60% of genetic mutations reported in these regions (likely due to better testing access).
 
-Asia:
+* Asia:
 Leading in smoking (45%) and alcohol consumption (52%).
 Early Detection: 70% (vs. 55% in Africa).
 
 #### Pie Charts:
 
-Tumor Size: Asia contributed 35.2% of cases, Europe 26.3%.
+* Tumor Size: Asia contributed 35.2% of cases, Europe 26.3%.
 Age Distribution: Asia (33.4%) and Europe (26.8%) had the oldest populations.
 
 ### Hypothesis Testing
@@ -131,7 +133,7 @@ Test if American continents (North/South America) have lower survival rates comp
 #### 4.2 Methodology
 Test: Chi-Square Test of Independence (α=0.05).
 
-Variables:
+* Variables:
 Dependent: Survival_5_years (binary: Yes/No).
 Independent: Continent (6 categories).
 
@@ -143,22 +145,22 @@ Mortality	6.99	0.222	Fail to reject H₀
 
 Interpretation:
 
-Fail to Reject the Null Hypothesis for Survival_5_years_numerical: No significant relationship between continent and survival_5_years_numerical.
+* Fail to Reject the Null Hypothesis for Survival_5_years_numerical: No significant relationship between continent and survival_5_years_numerical.
 
-Fail to Reject the Null Hypothesis for Mortality: No significant relationship between continent and mortality.
+* Fail to Reject the Null Hypothesis for Mortality: No significant relationship between continent and mortality.
 
-These results show that the data does not provide enough information to prove our hypothesis (alternative hypothesis), so we stick with null hypothesis.
+* These results show that the data does not provide enough information to prove our hypothesis (alternative hypothesis), so we stick with null hypothesis.
 
-Possible Reasons:
+* Possible Reasons:
 Similar healthcare standards across continents in the dataset.
 Data limitations (e.g., underrepresentation of African countries).
 
 #### Key Takeaways
 
-Age and Lifestyle are stronger predictors of CRC outcomes than geography.
+* Age and Lifestyle are stronger predictors of CRC outcomes than geography.
 
-Early Detection reduces mortality by 30%—critical for public health strategies.
+* Early Detection reduces mortality by 30%—critical for public health strategies.
 
-Hypothesis Rejected: Survival rates are statistically similar across continents.
+* Hypothesis Rejected: Survival rates are statistically similar across continents.
 
 
