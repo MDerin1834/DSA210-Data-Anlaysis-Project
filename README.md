@@ -142,7 +142,9 @@ Survival_5_years	8.27	0.142	Fail to reject H₀
 Mortality	6.99	0.222	Fail to reject H₀
 
 Interpretation:
-No significant association between continent and survival/mortality.
+Fail to Reject the Null Hypothesis for Survival_5_years_numerical: No significant relationship between continent and survival_5_years_numerical.
+Fail to Reject the Null Hypothesis for Mortality: No significant relationship between continent and mortality.
+These results show that the data does not provide enough information to prove our hypothesis (alternative hypothesis), so we stick with null hypothesis.
 
 Possible Reasons:
 Similar healthcare standards across continents in the dataset.
@@ -151,7 +153,9 @@ Data limitations (e.g., underrepresentation of African countries).
 #### Key Takeaways
 
 Age and Lifestyle are stronger predictors of CRC outcomes than geography.
+
 Early Detection reduces mortality by 30%—critical for public health strategies.
+
 Hypothesis Rejected: Survival rates are statistically similar across continents.
 
 
