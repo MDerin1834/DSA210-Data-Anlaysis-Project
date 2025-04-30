@@ -128,7 +128,7 @@ Age Distribution: Asia (33.4%) and Europe (26.8%) had the oldest populations.
 ### Hypothesis Testing
 
 #### 4.1 Objective
-Test if American continents (North/South America) have lower survival rates compared to other continents.
+Test if there is a significant difference in survival rates between American continents (North/South America) and other continents.
 
 #### 4.2 Methodology
 Test: Chi-Square Test of Independence (α=0.05).
@@ -139,9 +139,8 @@ Independent: Continent (6 categories).
 
 #### 4.3 Results
 
-Metric	Chi-Square Statistic	p-value	Conclusion
-Survival_5_years	8.27	0.142	Fail to reject H₀
-Mortality	6.99	0.222	Fail to reject H₀
+For Survival_5_years, Chi-Square Statistic is 8.27	with p-value being 0.142, thus failing to reject H₀.
+Also for Mortality, Chi-Square Statistic is 6.99 with p-value being 0.222, hence again	failing to reject H₀.
 
 Interpretation:
 
@@ -159,7 +158,7 @@ Data limitations (e.g., underrepresentation of African countries).
 
 * Age and Lifestyle are stronger predictors of CRC outcomes than geography.
 
-* Early Detection reduces mortality by 30%—critical for public health strategies.
+* Early Detection reduces mortality by 30%, which is critical for public health strategies.
 
 * Hypothesis Rejected: Survival rates are statistically similar across continents.
 
