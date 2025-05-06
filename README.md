@@ -160,6 +160,6 @@ Data limitations (e.g., underrepresentation of African countries).
 
 * Early Detection reduces mortality by 30%, which is critical for public health strategies.
 
-* Hypothesis Rejected: Survival rates are statistically similar across continents.
+* Alternative Hypothesis Rejected: Survival rates are statistically similar across continents.
 
 
