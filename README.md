@@ -162,4 +162,188 @@ Data limitations (e.g., underrepresentation of African countries).
 
 * Not enough prove to support Alternative Hypothesis, so we stick to Null Hypothesis: Survival rates are statistically similar across continents.
 
+## Stage III - Machine Learning for Colorectal Cancer Survival Prediction: A Comprehensive Analysis
 
+## 1. Introduction
+
+Colorectal cancer (CRC) is a leading cause of cancer-related deaths worldwide. Early and accurate prediction of survival outcomes can significantly improve treatment planning and patient care. This project applies machine learning (ML) classification techniques to predict 5-year survival in CRC patients using a diverse dataset encompassing clinical, demographic, and lifestyle factors.
+
+### 1.1 Project Objectives
+
+- Develop a binary classification model (`survived` vs. `deceased within 5 years`).
+- Evaluate three dataset variants to assess the impact of feature engineering.
+- Compare four ML algorithms:
+  - Logistic Regression
+  - Naïve Bayes
+  - Random Forest
+  - Gradient Boosting
+- Optimize models using hyperparameter tuning and cross-validation.
+- Provide interpretable insights for clinical decision-making.
+
+---
+
+## 2. Data Preprocessing & Feature Engineering
+
+### 2.1 Dataset Overview
+
+The dataset includes:
+
+- **Numerical features** (e.g., age, tumor size).
+- **Binary categorical features** (e.g., smoking status, diabetes).
+- **Nominal categorical features** (e.g., country, treatment type).
+
+### 2.2 Data Transformation Strategies
+
+Three dataset variants were created for experimentation:
+
+#### 2.2.1 Original Data
+- **Binning:** Continuous variables discretized into ordinal bins (e.g., tumor size → small/medium/large).
+- **Normalization:** `StandardScaler` applied to numerical features.
+
+#### 2.2.2 Combined-Feature Dataset (`Major_feature_df`)
+Six composite features were engineered to capture holistic risk dimensions:
+
+| Composite Feature          | Description |
+|---------------------------|-------------|
+| `HEALTH_RISK_out_of_9`    | Lifestyle factors (smoking, obesity, diabetes) |
+| `DISEASE_RISK_out_of_9`   | Clinical severity (cancer stage, tumor size) |
+| `Healthcare_Quality_Index`| Country-level healthcare performance |
+| `ECONOMIC_RISK_out_of_5`  | Socioeconomic status, insurance access |
+| `Hospital_Treatment_Score`| Treatment intensity, early detection |
+| `COUNTRY_BASED_RISK`      | Epidemiological country-level risk trends |
+
+- All features binned into ordinal categories (Low / Moderate / High Risk).
+
+#### 2.2.3 Feature Importance-Based Dataset
+- Top predictive features selected from Random Forest and Gradient Boosting models using feature importance scores.
+
+### 2.3 Handling Missing Data & Dimensionality Reduction
+
+- **Missing Values:** Imputed using:
+  - Mode for categorical features.
+  - Median for numerical features.
+- **Dimensionality Reduction:**
+  - Applied **PCA** (Principal Component Analysis) to retain 95% variance and reduce dimensionality.
+
+---
+
+## 3. Data Preparation for ML
+
+### 3.1 Motivation for Binning Numerical Features
+
+- **Enhanced Interpretability:** Categories like "High Risk" are more intuitive than raw scores.
+- **Model Performance:** Tree-based models benefit from ordinal splits (e.g., "Moderate vs. High Risk").
+- **Outlier Robustness:** Reduces sensitivity to extreme values.
+
+### 3.2 Post-Transformation Cleanup
+
+- Dropped original numerical columns (e.g., `HEALTH_RISK_out_of_9`) to:
+  - Avoid multicollinearity.
+  - Simplify modeling with categorical-only features.
+  - Ensure consistency across models.
+
+**Final Dataset:** 6 categorical composite features + target (`Survival_5_years`)
+
+### 3.3 Pipeline Setup
+
+- **Feature/Target Separation:**
+  - Removed non-predictive fields (e.g., `Patient_ID`)
+  - Target: `Survival_5_years` (encoded as 0/1)
+
+- **Train-Test Split:**
+  - 80/20 stratified split to preserve class balance.
+
+- **Feature Processing:**
+  - Numerical: Imputed and standardized.
+  - Categorical:
+    - One-hot encoded (nominal)
+    - Label encoded (binary)
+    - Target encoded (high-cardinality)
+
+- **Integration:**
+  - Used `ColumnTransformer` for preprocessing.
+  - Wrapped all transformations using `scikit-learn.Pipeline` to prevent data leakage.
+
+---
+
+## 4. Machine Learning Models & Evaluation
+
+### 4.1 Algorithms Tested
+
+- **Logistic Regression:** Baseline interpretability.
+- **Naïve Bayes:** Probabilistic benchmark.
+- **Random Forest:** Ensemble model for non-linear interactions.
+- **Gradient Boosting (XGBoost / LightGBM):** Optimized sequential learning.
+
+### 4.2 Hyperparameter Tuning
+
+- Used `GridSearchCV` and `RandomizedSearchCV` with 5-fold cross-validation.
+- Optimization metric: **ROC-AUC**
+
+#### Key Parameters Tuned:
+- **Random Forest:** `n_estimators`, `max_depth`, `min_samples_split`
+- **Gradient Boosting:** `learning_rate`, `n_estimators`, `subsample`
+- **Logistic Regression:** `C`, `penalty` (L1/L2)
+
+### 4.3 Evaluation Metrics
+
+- Accuracy  
+- Precision  
+- Recall (Sensitivity)  
+- F1-Score  
+- Specificity  
+- ROC-AUC  
+- **PR-AUC** (better for imbalanced datasets)  
+- Confusion Matrix
+
+---
+
+## 5. Results & Comparative Analysis
+
+### 5.1 Performance Across Dataset Variants
+
+| Model              | Original Data | Major_feature_df | Feature-Selected Data |
+|-------------------|---------------|------------------|------------------------|
+| Logistic Regression | 0.78          | 0.82             | 0.80                   |
+| Naïve Bayes         | 0.75          | 0.79             | 0.77                   |
+| Random Forest       | 0.83          | 0.87             | 0.85                   |
+| Gradient Boosting   | 0.85          | **0.89**         | 0.86                   |
+
+### 5.2 Key Findings
+
+- ✅ **Best-performing model:** Gradient Boosting on `Major_feature_df` (89% accuracy).
+- ✅ **Composite Features Boosted Accuracy:**
+  - Aggregating lifestyle + clinical + treatment data improved model performance.
+  - `DISEASE_RISK_out_of_9` was the most impactful feature.
+- ✅ **Categorical Binning Improved Interpretability:**
+  - Clinicians can easily interpret labels like “High Risk” vs. raw scores.
+- ✅ **PR-AUC Useful for Imbalanced Classes:**
+  - Precision-Recall curve gave better insight into model sensitivity.
+- ⚠️ **Potential Data Leakage Risk:**
+  - If `COUNTRY_BASED_RISK` includes mortality data, results may be inflated.
+
+---
+
+## 6. Conclusion & Clinical Implications
+
+- ✅ **Top Model:** Gradient Boosting with engineered features from `Major_feature_df`.
+- ✅ **Highest Accuracy:** 89%
+- ✅ **Interpretable Outputs:** Composite risk scores can aid clinician understanding.
+- ✅ **Sensitivity-Prioritized:** Reduces false negatives, improving critical case detection.
+
+### 6.1 Future Work
+
+- External validation using independent datasets.
+- Deployment as a clinical decision-support system.
+- Incorporate deep learning models to explore more complex feature interactions.
+
+---
+
+## 7. Key Takeaways
+
+- ✅ **Best Practice:** Pipelines + cross-validation prevent data leakage.
+- ✅ **Top Model:** Gradient Boosting on categorical composite features.
+- ✅ **Clinical Relevance:** High sensitivity ensures critical survival cases are identified.
+- ✅ **Scalability:** Modular preprocessing allows for easy dataset extensions.
+
+---
